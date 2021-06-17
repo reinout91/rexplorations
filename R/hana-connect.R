@@ -18,9 +18,9 @@ connection_database <-  RJDBC::dbConnect(drv = driver,
 query <- "SELECT TO_DATE(DATUM_TIJD) as DATUM, DATUM_TIJD, ASSETID, JAAR, SCENARIO_ID, SCENARIO, BELASTING FROM \"_SYS_BIC\".\"IT.Specifiek.Keten.NetPrognose.QV/NP_OUT_OS_PROFIELEN\" LIMIT 2"
 
 # Import data
-
-a <- as.data.table(DBI::dbFetch(
-  RJDBC::dbSendQuery(conn = connection_database,
-                     statement = query)))
+start_time <- Sys.time()
+a <- RJDBC::dbGetQuery(conn = connection_database,
+                     statement = query)
+print(Sys.time()-start_time)
 
 RJDBC::dbDisconnect(connection_database)
